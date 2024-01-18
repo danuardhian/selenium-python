@@ -9,13 +9,28 @@ driver.get("https://www.saucedemo.com/")
 
 username = driver.find_element(By.ID,"user-name")
 password = driver.find_element(By.ID, "password")
-login_button = driver.find_element(By.ID, "login-button")
 
+# input username
 username.clear
 username.send_keys("standard_user")
+
+# input password
 password.clear
 password.send_keys("secret_sauce")
-login_button.click
 
+# click login button
+button = WebDriverWait(driver, 10).until(
+        EC.visibility_of_element_located((By.ID, "login-button"))
+    )
+button.click()
+
+# assert
+element = driver.find_element(By.ID, "inventory_container")
+
+# Check if the element is displayed
+if element.is_displayed():
+    print("Element is displayed.")
+else:
+    print("Element is not displayed.")
 
 driver.quit()
